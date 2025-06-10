@@ -1,0 +1,66 @@
+name: Java CI/CD
+
+on:
+  # Manual workflow
+  workflow_dispatch:
+    inputs:
+      ProfileEnv:
+        type: choice
+        description: "Select DEV|SIT|UAT Deployment"
+        options:
+        - DEV
+        - SIT
+        - UAT
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up JDK 17
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: temurin
+
+      # Cache Maven dependencies for faster builds
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      # Build the project with Maven
+      - name: Build with Maven
+        run: mvn clean package --no-transfer-progress
+
+      # Deploy artifact to target server via SSH
+      - name: Deploy to target environment
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          port: ${{ secrets.DEPLOY_PORT }}
+          source: "target/*.jar"
+          target: "/path/to/deploy/directory"
+          rm: true
+          strip_components: 1
+
+      # Optionally, restart your service (adjust command as needed)
+      - name: Restart service on server
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          port: ${{ secrets.DEPLOY_PORT }}
+          script: |
+            systemctl restart your-java-service
