@@ -7,6 +7,12 @@ metadata:
     github.com/project-slug: amit23june/java-client
     backstage.io/techdocs-ref: dir:.
     cicd.pipeline: .github/workflows/deploy.yml
+    backstage.io/source-template: template:default/poc-port-io-templates
+    sonarqube.org/project-key: pump-station
+    backstage.io/code-coverage: scm-only
+    vault.io/secrets-path: test/backstage
+    github.com/user-login: amit23june
+    github.com/team-slug: backstage/maintainers
 spec:
   type: service
   lifecycle: experimental
