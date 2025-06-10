@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: java-client
+  description: 'Java service scaffolded from template'
+  annotations:
+    github.com/project-slug: amit23june/java-client
+spec:
+  type: service
+  lifecycle: experimental
+  owner: your-team
