@@ -13,6 +13,7 @@ metadata:
     vault.io/secrets-path: test/backstage
     github.com/user-login: amit23june
     github.com/team-slug: backstage/maintainers
+    github.com/project-slug: amit23june/java-client
 spec:
   type: service
   lifecycle: experimental
