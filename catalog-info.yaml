@@ -6,6 +6,7 @@ metadata:
   annotations:
     github.com/project-slug: amit23june/java-client
     backstage.io/techdocs-ref: dir:.
+    cicd.pipeline: .github/workflows/deploy.yml
 spec:
   type: service
   lifecycle: experimental
