@@ -15,5 +15,5 @@ metadata:
     github.com/team-slug: backstage/maintainers
 spec:
   type: service
-  lifecycle: experimental
-  owner: your-team
+  lifecycle: production
+  owner: pbass-team
